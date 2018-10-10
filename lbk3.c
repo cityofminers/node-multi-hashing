@@ -3,9 +3,9 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <sha3/sph_blake.h>
-#include <sha3/sph_bmw.h>
-#include <sha3/sph_keccak.h>
+#include <sha4/sph_blake.h>
+#include <sha4/sph_bmw.h>
+#include <sha4/sph_keccak.h>
 
 #define _ALIGN(x) __attribute__ ((aligned(x)))
 
