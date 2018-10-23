@@ -35,6 +35,7 @@ extern "C" {
     #include "whirlpoolx.h"
     #include "x5.h"
     #include "x11.h"
+    #include "x16s.h"
     #include "x11ghost.h"
     #include "x13.h"
     #include "x14.h"
@@ -620,6 +621,26 @@ NAN_METHOD(lbk3) {
     info.GetReturnValue().Set(Nan::NewBuffer(output, 32).ToLocalChecked());
 }
 
+NAN_METHOD(x16s) {
+
+    if (info.Length() < 1)
+        return THROW_ERROR_EXCEPTION("You must provide one argument.");
+
+    Local<Object> target = Nan::To<Object>(info[0]).ToLocalChecked();
+
+    if(!Buffer::HasInstance(target))
+        return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+
+    char * input = Buffer::Data(target);
+    char *output = (char*) malloc(sizeof(char) * 32);
+
+    uint32_t input_len = Buffer::Length(target);
+
+    x16s_hash(input, output, input_len);
+
+    info.GetReturnValue().Set(Nan::NewBuffer(output, 32).ToLocalChecked());
+}
+
 
 NAN_METHOD(fresh) {
 
@@ -687,6 +708,7 @@ NAN_MODULE_INIT(init) {
     Nan::Set(target, Nan::New("x15").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(x15)).ToLocalChecked());
     Nan::Set(target, Nan::New("x16r").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(x16r)).ToLocalChecked());
     Nan::Set(target, Nan::New("lbk3").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(lbk3)).ToLocalChecked());
+        Nan::Set(target, Nan::New("x16s").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(x16s)).ToLocalChecked());
     Nan::Set(target, Nan::New("fresh").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(fresh)).ToLocalChecked());
     Nan::Set(target, Nan::New("neoscrypt").ToLocalChecked(),Nan::GetFunction(Nan::New<FunctionTemplate>(neoscrypt)).ToLocalChecked());
     Nan::Set(target, Nan::New("yescrypt").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(yescrypt)).ToLocalChecked());
