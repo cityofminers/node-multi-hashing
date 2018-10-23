@@ -31,6 +31,7 @@
                 "tribus.c",
                 "sha1.c",
                 "lbk3.c", 
+                "x16s.c",
                 "sha3/sph_hefty1.c",
                 "sha3/sph_fugue.c",
                 "sha3/aes_helper.c",
